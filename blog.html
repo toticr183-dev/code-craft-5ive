@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Code Craft 5ive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        :root {
+            --primary: #ff6b35;
+            --secondary: #2e4057;
+            --accent: #f7c35c;
+            --dark: #1d2b3a;
+            --light: #f4f4f8;
+        }
+
+        .five {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--dark);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            color: var(--primary);
+        }
+
+        .btn-login {
+            background: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            color: white !important;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* Blog Layout */
+        .blog-main {
+            padding: 5rem 0;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+
+        /* Blog Posts */
+        .blog-post {
+            margin-bottom: 4rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .blog-post:last-child {
+            border-bottom: none;
+        }
+
+        .post-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .post-image i {
+            font-size: 5rem;
+            color: white;
+            opacity: 0.8;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .post-meta i {
+            margin-right: 0.3rem;
+            color: var(--primary);
+        }
+
+        .post-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .post-title a {
+            color: var(--dark);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .post-title a:hover {
+            color: var(--primary);
+        }
+
+        .post-excerpt {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .read-more {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .read-more:hover {
+            color: #e05a2c;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .sidebar-widget {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-widget h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            border-left: 4px solid var(--primary);
+            padding-left: 1rem;
+        }
+
+        .about-widget p {
+            margin-bottom: 1rem;
+        }
+
+        .categories-widget ul {
+            list-style: none;
+        }
+
+        .categories-widget li {
+            margin-bottom: 0.8rem;
+        }
+
+        .categories-widget a {
+            color: #555;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .categories-widget a:hover {
+            color: var(--primary);
+        }
+
+        .recent-posts-widget .recent-post {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+
+        .recent-post-image {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .recent-post-image i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .recent-post-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .recent-post-info h4 a {
+            color: var(--dark);
+            text-decoration: none;
+        }
+
+        .recent-post-info p {
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        .tags-widget .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: white;
+            color: var(--dark);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .tag:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            color: #aaa;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--dark);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                gap: 1rem;
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .blog-main {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>Code Craft <span class="five">5ive</span></h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="work.html">Work</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html" class="btn-login">Member Login</a></li>
+            </ul>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Our <span class="five">Blog</span></h1>
+            <p>Insights, tutorials, and stories from the Code Craft 5ive team. Learn with us as we grow.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="blog-main">
+            <main class="blog-posts">
+                <!-- Blog Post 1 -->
+                <article class="blog-post">
+                    <div class="post-image">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="post-meta">
+                        <span><i class="fas fa-calendar"></i> March 15, 2026</span>
+                        <span><i class="fas fa-user"></i> Tofik</span>
+                        <span><i class="fas fa-folder"></i> Web Development</span>
+                    </div>
+                    <h2 class="post-title"><a href="#">How I Built 12 Websites Without a Phone</a></h2>
+                    <p class="post-excerpt">When you want something badly enough, you find a way. Here's my story of building real websites using borrowed phones and computer lab time. And how you can too, no matter your situation...</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </article>
+
+                <!-- Blog Post 2 -->
+                <article class="blog-post">
+                    <div class="post-image">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="post-meta">
+                        <span><i class="fas fa-calendar"></i> March 10, 2026</span>
+                        <span><i class="fas fa-user"></i> Fenet</span>
+                        <span><i class="fas fa-folder"></i> Video Editing</span>
+                    </div>
+                    <h2 class="post-title"><a href="#">5 Free Video Editing Apps for Beginners</a></h2>
+                    <p class="post-excerpt">You don't need expensive software to create amazing videos. Here are 5 completely free tools that will help you start your video editing journey today...</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </article>
+
+                <!-- Blog Post 3 -->
+                <article class="blog-post">
+                    <div class="post-image">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <div class="post-meta">
+                        <span><i class="fas fa-calendar"></i> March 5, 2026</span>
+                        <span><i class="fas fa-user"></i> Lema</span>
+                        <span><i class="fas fa-folder"></i> Graphics Design</span>
+                    </div>
+                    <h2 class="post-title"><a href="#">Design Principles Every Beginner Should Know</a></h2>
+                    <p class="post-excerpt">Color theory, typography, layout - these aren't just fancy words. They're the difference between amateur and professional work. Let me break them down simply...</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </article>
+
+                <!-- Blog Post 4 -->
+                <article class="blog-post">
+                    <div class="post-image">
+                        <i class="fas fa-hashtag"></i>
+                    </div>
+                    <div class="post-meta">
+                        <span><i class="fas fa-calendar"></i> February 28, 2026</span>
+                        <span><i class="fas fa-user"></i> Melat</span>
+                        <span><i class="fas fa-folder"></i> Social Media</span>
+                    </div>
+                    <h2 class="post-title"><a href="#">How to Grow Your Page Without Paying for Ads</a></h2>
+                    <p class="post-excerpt">Organic growth is still possible in 2026. Here are the exact strategies I used to grow pages from zero to thousands of real followers...</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </article>
+
+                <!-- Blog Post 5 -->
+                <article class="blog-post">
+                    <div class="post-image">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="post-meta">
+                        <span><i class="fas fa-calendar"></i> February 20, 2026</span>
+                        <span><i class="fas fa-user"></i> Beza</span>
+                        <span><i class="fas fa-folder"></i> Productivity</span>
+                    </div>
+                    <h2 class="post-title"><a href="#">Managing Multiple Projects Without Burning Out</a></h2>
+                    <p class="post-excerpt">When you're a creator with multiple clients, burnout is real. Here's my system for staying organized and delivering quality work every time...</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </article>
+            </main>
+
+            <aside class="sidebar">
+                <div class="sidebar-widget about-widget">
+                    <h3>About Our Blog</h3>
+                    <p>Welcome to the Code Craft 5ive blog! We share our journey, lessons learned, and tips for aspiring creators in Ethiopia and beyond.</p>
+                    <p>Five voices. One mission. Real stories.</p>
+                </div>
+
+                <div class="sidebar-widget categories-widget">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="#">Web Development <span>(12)</span></a></li>
+                        <li><a href="#">Video Editing <span>(8)</span></a></li>
+                        <li><a href="#">Graphics Design <span>(10)</span></a></li>
+                        <li><a href="#">Social Media <span>(7)</span></a></li>
+                        <li><a href="#">Productivity <span>(5)</span></a></li>
+                        <li><a href="#">Team Stories <span>(9)</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-widget recent-posts-widget">
+                    <h3>Recent Posts</h3>
+                    <div class="recent-post">
+                        <div class="recent-post-image">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="recent-post-info">
+                            <h4><a href="#">How I Built 12 Websites Without a Phone</a></h4>
+                            <p>March 15, 2026</p>
+                        </div>
+                    </div>
+                    <div class="recent-post">
+                        <div class="recent-post-image">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="recent-post-info">
+                            <h4><a href="#">5 Free Video Editing Apps</a></h4>
+                            <p>March 10, 2026</p>
+                        </div>
+                    </div>
+                    <div class="recent-post">
+                        <div class="recent-post-image">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <div class="recent-post-info">
+                            <h4><a href="#">Design Principles for Beginners</a></h4>
+                            <p>March 5, 2026</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-widget tags-widget">
+                    <h3>Tags</h3>
+                    <div class="tags">
+                        <a href="#" class="tag">HTML</a>
+                        <a href="#" class="tag">CSS</a>
+                        <a href="#" class="tag">Web Design</a>
+                        <a href="#" class="tag">Video</a>
+                        <a href="#" class="tag">Editing</a>
+                        <a href="#" class="tag">Canva</a>
+                        <a href="#" class="tag">Photoshop</a>
+                        <a href="#" class="tag">Marketing</a>
+                        <a href="#" class="tag">Growth</a>
+                        <a href="#" class="tag">Ethiopia</a>
+                        <a href="#" class="tag">Freelancing</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Code Craft <span class="five">5ive</span></h2>
+                    <p>United We Code. Divided We Fall.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="team.html">Team</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Code Craft 5ive. All rights reserved. Built with 💪 in Ethiopia.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
