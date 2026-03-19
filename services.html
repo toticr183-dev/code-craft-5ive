@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Code Craft 5ive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        :root {
+            --primary: #ff6b35;
+            --secondary: #2e4057;
+            --accent: #f7c35c;
+            --dark: #1d2b3a;
+            --light: #f4f4f8;
+        }
+
+        .five {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--dark);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            color: var(--primary);
+        }
+
+        .btn-login {
+            background: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            color: white !important;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* Services Intro */
+        .services-intro {
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .services-intro h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .services-intro p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Individual Services */
+        .service-detail {
+            padding: 5rem 0;
+            background: var(--light);
+        }
+
+        .service-detail:nth-child(even) {
+            background: white;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .service-info h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .service-info h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .service-info p {
+            margin-bottom: 1rem;
+        }
+
+        .service-info ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-info li {
+            margin-bottom: 0.5rem;
+        }
+
+        .service-icon {
+            text-align: center;
+        }
+
+        .service-icon i {
+            font-size: 8rem;
+            color: var(--primary);
+        }
+
+        /* Pricing */
+        .pricing {
+            padding: 5rem 0;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid transparent;
+            transition: transform 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+        }
+
+        .pricing-card.popular {
+            border-color: var(--primary);
+            position: relative;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: #777;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-card li {
+            margin-bottom: 0.8rem;
+        }
+
+        .pricing-card li i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+
+        .btn-pricing {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+
+        .btn-pricing:hover {
+            background: #e05a2c;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            color: #aaa;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--dark);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                gap: 1rem;
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>Code Craft <span class="five">5ive</span></h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html" class="active">Services</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="work.html">Work</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html" class="btn-login">Member Login</a></li>
+            </ul>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Our <span class="five">Services</span></h1>
+            <p>Complete digital solutions from five passionate creators. One team. Endless possibilities.</p>
+        </div>
+    </section>
+
+    <section class="services-intro">
+        <div class="container">
+            <h2>What <span class="five">We Offer</span></h2>
+            <p>We combine five different skills to give you everything you need to succeed online. From building your website to creating content that gets attention.</p>
+        </div>
+    </section>
+
+    <!-- Tofik's Service -->
+    <section class="service-detail">
+        <div class="container">
+            <div class="service-grid">
+                <div class="service-info">
+                    <h3>Tofik • Web Development</h3>
+                    <h4>Custom websites that actually work</h4>
+                    <p>From simple landing pages to full multi-page websites, I build responsive, fast-loading sites that look great on any device. No templates. No shortcuts. Just clean HTML/CSS code.</p>
+                    <ul>
+                        <li>Business websites (5-8 pages)</li>
+                        <li>Personal portfolios</li>
+                        <li>Landing pages for campaigns</li>
+                        <li>Website maintenance and updates</li>
+                    </ul>
+                </div>
+                <div class="service-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fenet's Service -->
+    <section class="service-detail">
+        <div class="container">
+            <div class="service-grid">
+                <div class="service-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <div class="service-info">
+                    <h3>Fenet • Video Editing</h3>
+                    <h4>Stories that move</h4>
+                    <p>Raw footage becomes powerful stories. I edit videos that capture attention, deliver your message, and leave a lasting impression.</p>
+                    <ul>
+                        <li>Promotional videos</li>
+                        <li>Social media content (Reels, TikToks)</li>
+                        <li>Event coverage edits</li>
+                        <li>YouTube content</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lema's Service -->
+    <section class="service-detail">
+        <div class="container">
+            <div class="service-grid">
+                <div class="service-info">
+                    <h3>Lema • Graphics Design</h3>
+                    <h4>Visuals that speak</h4>
+                    <p>Your brand deserves to look professional. I create designs that communicate your value and make you stand out.</p>
+                    <ul>
+                        <li>Logos and brand identity</li>
+                        <li>Social media graphics</li>
+                        <li>Business cards and flyers</li>
+                        <li>Website visuals and banners</li>
+                    </ul>
+                </div>
+                <div class="service-icon">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Melat's Service -->
+    <section class="service-detail">
+        <div class="container">
+            <div class="service-grid">
+                <div class="service-icon">
+                    <i class="fas fa-hashtag"></i>
+                </div>
+                <div class="service-info">
+                    <h3>Melat • Social Media Management</h3>
+                    <h4>Build your audience</h4>
+                    <p>Great content needs great strategy. I help you grow, engage, and convert followers into customers.</p>
+                    <ul>
+                        <li>Content planning and scheduling</li>
+                        <li>Account growth strategies</li>
+                        <li>Engagement and community management</li>
+                        <li>Analytics and reporting</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beza's Service -->
+    <section class="service-detail">
+        <div class="container">
+            <div class="service-grid">
+                <div class="service-info">
+                    <h3>Beza • Project Coordination</h3>
+                    <h4>Your project, delivered</h4>
+                    <p>I make sure everything runs smoothly. From first conversation to final delivery, I coordinate between you and our team so you get exactly what you need, on time.</p>
+                    <ul>
+                        <li>Project planning and timelines</li>
+                        <li>Client communication</li>
+                        <li>Quality assurance</li>
+                        <li>Post-project support</li>
+                    </ul>
+                </div>
+                <div class="service-icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing">
+        <div class="container">
+            <h2 class="section-title">Simple <span class="five">Pricing</span></h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Single Service</h3>
+                    <div class="price">From $50 <span>per project</span></div>
+                    <ul>
+                        <li><i class="fas fa-check"></i> One service (web, design, etc.)</li>
+                        <li><i class="fas fa-check"></i> 2 rounds of revisions</li>
+                        <li><i class="fas fa-check"></i> Delivery in 5-7 days</li>
+                        <li><i class="fas fa-check"></i> Basic support</li>
+                    </ul>
+                    <a href="contact.html" class="btn-pricing">Get Started</a>
+                </div>
+                <div class="pricing-card popular">
+                    <div class="popular-badge">Most Popular</div>
+                    <h3>Team Bundle</h3>
+                    <div class="price">From $150 <span>per project</span></div>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 3 services combined</li>
+                        <li><i class="fas fa-check"></i> Unlimited revisions</li>
+                        <li><i class="fas fa-check"></i> Delivery in 3-5 days</li>
+                        <li><i class="fas fa-check"></i> Priority support</li>
+                        <li><i class="fas fa-check"></i> Strategy consultation</li>
+                    </ul>
+                    <a href="contact.html" class="btn-pricing">Get Started</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Full Package</h3>
+                    <div class="price">From $300 <span>per project</span></div>
+                    <ul>
+                        <li><i class="fas fa-check"></i> All 5 services</li>
+                        <li><i class="fas fa-check"></i> Unlimited revisions</li>
+                        <li><i class="fas fa-check"></i> Fast track delivery</li>
+                        <li><i class="fas fa-check"></i> 24/7 priority support</li>
+                        <li><i class="fas fa-check"></i> Monthly maintenance</li>
+                    </ul>
+                    <a href="contact.html" class="btn-pricing">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Code Craft <span class="five">5ive</span></h2>
+                    <p>United We Code. Divided We Fall.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="team.html">Team</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Code Craft 5ive. All rights reserved. Built with 💪 in Ethiopia.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
