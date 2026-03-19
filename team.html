@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team - Code Craft 5ive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        :root {
+            --primary: #ff6b35;
+            --secondary: #2e4057;
+            --accent: #f7c35c;
+            --dark: #1d2b3a;
+            --light: #f4f4f8;
+        }
+
+        .five {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--dark);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            color: var(--primary);
+        }
+
+        .btn-login {
+            background: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            color: white !important;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* Team Intro */
+        .team-intro {
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .team-intro h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .team-intro p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Team Grid */
+        .team-grid {
+            padding: 0 0 5rem 0;
+        }
+
+        .team-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .member-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .member-image {
+            height: 250px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .member-image i {
+            font-size: 5rem;
+            color: white;
+            opacity: 0.8;
+        }
+
+        .member-info {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .member-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .member-role {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .member-bio {
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+
+        .member-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .member-social a {
+            color: var(--dark);
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .member-social a:hover {
+            color: var(--primary);
+        }
+
+        /* Team Stats */
+        .team-stats {
+            background: var(--light);
+            padding: 5rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            color: var(--primary);
+        }
+
+        .stat-item p {
+            font-size: 1.2rem;
+            color: var(--dark);
+        }
+
+        /* Join Team CTA */
+        .join-cta {
+            padding: 5rem 0;
+            text-align: center;
+            background: var(--dark);
+            color: white;
+        }
+
+        .join-cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .join-cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn-join {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 3rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+
+        .btn-join:hover {
+            background: #e05a2c;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            color: #aaa;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--dark);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                gap: 1rem;
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>Code Craft <span class="five">5ive</span></h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="team.html" class="active">Team</a></li>
+                <li><a href="work.html">Work</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html" class="btn-login">Member Login</a></li>
+            </ul>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Meet The <span class="five">Five</span></h1>
+            <p>Five individuals. One heartbeat. Get to know the faces behind Code Craft 5ive.</p>
+        </div>
+    </section>
+
+    <section class="team-intro">
+        <div class="container">
+            <h2>The <span class="five">Dream Team</span></h2>
+            <p>We are not just colleagues. We are brothers and sisters on a mission. Each of us brings a unique superpower, and together we are unstoppable.</p>
+        </div>
+    </section>
+
+    <section class="team-grid">
+        <div class="container">
+            <div class="team-members">
+                <!-- Tofik -->
+                <div class="member-card">
+                    <div class="member-image">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="member-info">
+                        <h3>Tofik</h3>
+                        <div class="member-role">Web Developer & Leader</div>
+                        <p class="member-bio">The founder. Built 12+ websites before owning a phone. He codes with passion and leads with vision. Tofik believes Ethiopian developers can compete globally.</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-telegram"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fenet -->
+                <div class="member-card">
+                    <div class="member-image">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="member-info">
+                        <h3>Fenet</h3>
+                        <div class="member-role">Video Editor</div>
+                        <p class="member-bio">The storyteller. She turns raw footage into emotional journeys. Fenet believes every brand has a story waiting to be told through moving images.</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-telegram"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lema -->
+                <div class="member-card">
+                    <div class="member-image">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <div class="member-info">
+                        <h3>Lema</h3>
+                        <div class="member-role">Graphics Designer</div>
+                        <p class="member-bio">The visual poet. He creates designs that stop the scroll. Lema knows that great design is not just about looking good - it's about communicating value.</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-telegram"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-behance"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Melat -->
+                <div class="member-card">
+                    <div class="member-image">
+                        <i class="fas fa-hashtag"></i>
+                    </div>
+                    <div class="member-info">
+                        <h3>Melat</h3>
+                        <div class="member-role">Social Media Manager</div>
+                        <p class="member-bio">The growth strategist. She builds communities and turns followers into fans. Melat knows the algorithms and how to make them work for you.</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-telegram"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Beza -->
+                <div class="member-card">
+                    <div class="member-image">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="member-info">
+                        <h3>Beza</h3>
+                        <div class="member-role">Project Coordinator</div>
+                        <p class="member-bio">The organizer. She keeps the team on track and clients happy. Beza ensures that every project is delivered on time, on budget, and beyond expectations.</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-telegram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-trello"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>50+</h3>
+                    <p>Projects Completed</p>
+                </div>
+                <div class="stat-item">
+                    <h3>30+</h3>
+                    <p>Happy Clients</p>
+                </div>
+                <div class="stat-item">
+                    <h3>5</h3>
+                    <p>Expert Creators</p>
+                </div>
+                <div class="stat-item">
+                    <h3>24/7</h3>
+                    <p>Support Available</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="join-cta">
+        <div class="container">
+            <h2>Want to join <span class="five">Code Craft 5ive</span>?</h2>
+            <p>We're always looking for hungry creators who want to build something meaningful. If you have the fire, we have the team.</p>
+            <a href="contact.html" class="btn-join">Apply Now</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Code Craft <span class="five">5ive</span></h2>
+                    <p>United We Code. Divided We Fall.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="team.html">Team</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Code Craft 5ive. All rights reserved. Built with 💪 in Ethiopia.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
